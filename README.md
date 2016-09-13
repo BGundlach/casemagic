@@ -1,0 +1,2 @@
+# casemagic
+casemagicuserscript
