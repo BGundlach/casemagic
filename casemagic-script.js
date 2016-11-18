@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CaseMagic
 // @namespace    https://raw.githubusercontent.com/BGundlach/casemagic/master/casemagic-script.js
-// @version      0.1
+// @version      0.2
 // @description  open an entire class of trackingsheets
 // @author       Brian Gundlach
 // @match        https://casemagic.net/WATCH/home/
