@@ -5,7 +5,7 @@
 // @description  open an entire class of trackingsheets
 // @author       Brian Gundlach
 // @match        https://casemagic.net/WATCH/home/
-// @grant        none
+// @grant        unsafeWindow
 // ==/UserScript==
 
 function getConsumerTrackingSheet(array name){
