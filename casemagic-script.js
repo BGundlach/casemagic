@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         CaseMagic
 // @namespace    https://raw.githubusercontent.com/BGundlach/casemagic/master/casemagic-script.js
-// @version      0.2
+// @version      0.3
 // @description  open an entire class of trackingsheets
 // @author       Brian Gundlach
 // @match        https://casemagic.net/WATCH/home/
-// @grant        unsafeWindow
+// @grant        GM_addstyle
 // ==/UserScript==
 
 function getConsumerTrackingSheet(array name){
@@ -25,26 +25,51 @@ function loadAdvocateGroup(AdvocateGroup){
 		loadTrackingSheet(AdvocateGroup[i][0],AdvocateGroup[i][1],"","");
 	}
 }
+function go(event){
+	loadAdvocateGroup(AdvocateGroup)
+}
 function go(){
 	loadAdvocateGroup(AdvocateGroup)
 }
-function loadCaseNote4Tracking (consumerID, name, i, k, j, l, m, n, o) {
-	loadCaseNote(consumerID, name, '',0)
-}
+var zNode       = document.createElement ('div');
+zNode.innerHTML = '<button id="myButton" type="button">'
+                + 'Advocate Group Tracking</button>'
+                ;
+zNode.setAttribute ('id', 'myContainer');
+document.body.appendChild (zNode);
 
-addJS_Node (loadCaseNote4Tracking);
-
-function addJS_Node (text, s_URL, funcToRun, runOnLoad) {
-    var D                                   = document;
-    var scriptNode                          = D.createElement ('script');
-    if (runOnLoad) {
-        scriptNode.addEventListener ("load", runOnLoad, false);
+//--- Activate the newly added button.
+document.getElementById ("myButton").addEventListener (
+    "click", go, false
+);
+//--- Style our newly added elements using CSS.
+GM_addStyle ( multilineStr ( function () {/*!
+    #myContainer {
+        position:               absolute;
+        top:                    0;
+        left:                   0;
+        font-size:              16px;
+        background:             cyan;
+        border:                 3px outset black;
+        margin:                 5px;
+        opacity:                0.9;
+        z-index:                222;
+        padding:                5px 20px;
     }
-    scriptNode.type                         = "text/javascript";
-    if (text)       scriptNode.textContent  = text;
-    if (s_URL)      scriptNode.src          = s_URL;
-    if (funcToRun)  scriptNode.textContent  = '(' + funcToRun.toString() + ')()';
+    #myButton {
+        cursor:                 pointer;
+    }
+    #myContainer p {
+        color:                  red;
+        background:             white;
+    }
+*/} ) );
 
-    var targ = D.getElementsByTagName ('head')[0] || D.body || D.documentElement;
-    targ.appendChild (scriptNode);
+function multilineStr (dummyFunc) {
+    var str = dummyFunc.toString ();
+    str     = str.replace (/^[^\/]+\/\*!?/, '') // Strip function () { /*!
+            .replace (/\s*\*\/\s*\}\s*$/, '')   // Strip */ }
+            .replace (/\/\/.+$/gm, '') // Double-slash comments wreck CSS. Strip them.
+            ;
+    return str;
 }
