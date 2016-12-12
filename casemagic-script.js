@@ -8,7 +8,7 @@
 // @grant        GM_addstyle
 // ==/UserScript==
 
-function getConsumerTrackingSheet(array name){
+function getConsumerTrackingSheet(name){
 	$('input#search_box').attr({value:name});
 	searchCaseload();
 	$('table.case_table a[title*="towards case goals"').click();
